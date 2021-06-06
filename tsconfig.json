@@ -5,7 +5,5 @@
     "lib": ["esnext"],
     "strict": true,
     "moduleResolution": "node"
-  },
-  "include": ["src"],
-  "exclude": ["node_modules"]
+  }
 }
