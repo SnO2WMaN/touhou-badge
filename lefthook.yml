@@ -1,3 +1,9 @@
+pre-push:
+  parallel:
+  commands:
+    ts-check:
+      run: tsc --noEmit
+
 pre-commit:
   parallel: true
   commands:
