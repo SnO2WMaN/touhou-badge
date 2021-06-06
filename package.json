@@ -2,6 +2,7 @@
   "name": "touhou.badge",
   "private": true,
   "scripts": {
+    "ts-check": "tsc --noEmit",
     "lint": "scripty",
     "lint:eslint": "scripty",
     "lint:prettier": "scripty",
