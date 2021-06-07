@@ -32,7 +32,7 @@ export type Option = {
 
 export type Parser = (
   query: VercelRequestQuery,
-  defaultValues: {
+  defaultValues?: {
     [key in
       | 'style'
       | 'localeName'
