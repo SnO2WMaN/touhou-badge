@@ -66,22 +66,22 @@ export const mapColor: MapColors = {
   extra: '#d2b872',
 };
 
-export const translateName: TranslateName = (map, i18n) => map[i18n.name];
+export const translateName: TranslateName = (map, locales) => map[locales.name];
 
 export const translateDifficulty: TranslateDifficulty = (
   map,
-  i18n,
+  locales,
   difficulty,
-) => map[i18n.difficulty][difficulty];
+) => map[locales.difficulty][difficulty];
 
 export const translateCharacters: TranslateCharacters = (
   map,
-  i18n,
+  locales,
   character,
 ) =>
   [
-    map[i18n.character].player[character.player],
-    map[i18n.character].support[character.support],
+    map[locales.characters].player[character.player],
+    map[locales.characters].support[character.support],
   ].join('+');
 
 export const getLabelText: GetLabelText = ({characters, name}) =>
@@ -96,17 +96,17 @@ export const generator: Generator = (option) => {
   return {
     style: option.badge.style,
     label: getLabelText({
-      name: translateName(mapName, option.i18n),
+      name: translateName(mapName, option.locale),
       characters: translateCharacters(
         mapCharacters,
-        option.i18n,
-        option.character,
+        option.locale,
+        option.characters,
       ),
     }),
     message: getMessageText({
       difficulty: translateDifficulty(
         mapDifficulties,
-        option.i18n,
+        option.locale,
         option.difficulty,
       ),
     }),

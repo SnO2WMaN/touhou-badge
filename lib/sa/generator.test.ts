@@ -14,8 +14,8 @@ describe('translateName()', () => {
   it.each([
     [mapMocked.ja, {name: 'ja'} as const],
     [mapMocked['en-abbr'], {name: 'en-abbr'} as const],
-  ])('Mocked map test %i', (expected, i18n) => {
-    expect(translateName(mapMocked, i18n)).toBe(expected);
+  ])('Mocked map test %i', (expected, locales) => {
+    expect(translateName(mapMocked, locales)).toBe(expected);
   });
 });
 
@@ -30,8 +30,8 @@ describe('translateDifficulty()', () => {
     [mapMocked.en.normal, {difficulty: 'en'} as const, 'normal' as const],
     [mapMocked.jp.easy, {difficulty: 'jp'} as const, 'easy' as const],
     [mapMocked.jp.normal, {difficulty: 'jp'} as const, 'normal' as const],
-  ])('Mocked map test %i', (expected, i18n, difficulty) => {
-    expect(translateDifficulty(mapMocked, i18n, difficulty)).toBe(expected);
+  ])('Mocked map test %i', (expected, locales, difficulty) => {
+    expect(translateDifficulty(mapMocked, locales, difficulty)).toBe(expected);
   });
 });
 
@@ -44,11 +44,11 @@ describe('translateCharacters()', () => {
   it.each([
     [
       `${mapMocked['ja-short'].player.reimu}+${mapMocked['ja-short'].support.yukari}`,
-      {character: 'ja-short'} as const,
+      {characters: 'ja-short'} as const,
       {player: 'reimu', support: 'yukari'} as const,
     ],
-  ])('Mocked map test %i', (expected, i18n, characters) => {
-    expect(translateCharacters(mapMocked, i18n, characters)).toBe(expected);
+  ])('Mocked map test %i', (expected, locales, characters) => {
+    expect(translateCharacters(mapMocked, locales, characters)).toBe(expected);
   });
 });
 

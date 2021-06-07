@@ -2,7 +2,7 @@ import {
   checkBadgeProps,
   checkCharacterProps,
   checkDifficulty,
-  checkI18nProps,
+  checkLocaleProps,
 } from './parser';
 
 describe('checkBadgeProps()', () => {
@@ -22,10 +22,10 @@ describe('checkBadgeProps()', () => {
   });
 });
 
-describe('checkI18nProps()', () => {
+describe('checkLocalesProps()', () => {
   it('value.name must not be an array', () => {
     expect(
-      checkI18nProps({name: [], character: 'ja-short', difficulty: 'en'}),
+      checkLocaleProps({name: [], characters: 'ja-short', difficulty: 'en'}),
     ).toBe(false);
   });
 
@@ -33,9 +33,9 @@ describe('checkI18nProps()', () => {
     'value.name "%s" must be true',
     (valueName) => {
       expect(
-        checkI18nProps({
+        checkLocaleProps({
           name: valueName,
-          character: 'ja-short',
+          characters: 'ja-short',
           difficulty: 'en',
         }),
       ).toBe(true);
@@ -44,9 +44,9 @@ describe('checkI18nProps()', () => {
 
   it('other value.name must be false', () => {
     expect(
-      checkI18nProps({
+      checkLocaleProps({
         name: 'something',
-        character: 'ja-short',
+        characters: 'ja-short',
         difficulty: 'en',
       }),
     ).toBe(false);
@@ -54,9 +54,9 @@ describe('checkI18nProps()', () => {
 
   it('value.character must not be an array', () => {
     expect(
-      checkI18nProps({
+      checkLocaleProps({
         name: 'ja-abbr',
-        character: [],
+        characters: [],
         difficulty: 'en',
       }),
     ).toBe(false);
@@ -66,9 +66,9 @@ describe('checkI18nProps()', () => {
     'value.character "%s" must be true',
     (valueCharacter) => {
       expect(
-        checkI18nProps({
+        checkLocaleProps({
           name: 'ja-abbr',
-          character: valueCharacter,
+          characters: valueCharacter,
           difficulty: 'en',
         }),
       ).toBe(true);
@@ -77,9 +77,9 @@ describe('checkI18nProps()', () => {
 
   it('other value.character must be false', () => {
     expect(
-      checkI18nProps({
+      checkLocaleProps({
         name: 'ja-abbr',
-        character: 'something',
+        characters: 'something',
         difficulty: 'en',
       }),
     ).toBe(false);
@@ -87,9 +87,9 @@ describe('checkI18nProps()', () => {
 
   it('value.difficulty must not be an array', () => {
     expect(
-      checkI18nProps({
+      checkLocaleProps({
         name: 'ja-abbr',
-        character: 'ja-short',
+        characters: 'ja-short',
         difficulty: [],
       }),
     ).toBe(false);
@@ -99,9 +99,9 @@ describe('checkI18nProps()', () => {
     'value.difficulty "%s" must be true',
     (valueDifficulty) => {
       expect(
-        checkI18nProps({
+        checkLocaleProps({
           name: 'ja-abbr',
-          character: 'ja-short',
+          characters: 'ja-short',
           difficulty: valueDifficulty,
         }),
       ).toBe(true);
@@ -110,9 +110,9 @@ describe('checkI18nProps()', () => {
 
   it('other value.difficulty must be false', () => {
     expect(
-      checkI18nProps({
+      checkLocaleProps({
         name: 'ja-abbr',
-        character: 'ja-short',
+        characters: 'ja-short',
         difficulty: 'something',
       }),
     ).toBe(false);
