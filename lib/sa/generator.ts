@@ -1,68 +1,115 @@
-import {Format} from 'badge-maker';
-import {mapColor, mapLabelText, mapMessageText} from './maps';
-import {Option} from './types';
+import {
+  Generator,
+  GetColor,
+  GetLabelText,
+  GetMessageText,
+  MapCharacters,
+  MapColors,
+  MapDifficulties,
+  MapName,
+  TranslateCharacters,
+  TranslateDifficulty,
+  TranslateName,
+} from './types';
 
-export const getLabelText = <
-  TI18nName extends string,
-  TI18nCharacter extends string,
-  TPlayer extends string,
-  TSupport extends string
->(
-  {
-    i18n,
-    player,
-    support,
-  }: {
-    i18n: {name: TI18nName; character: TI18nCharacter};
-    player: TPlayer;
-    support: TSupport;
+const mapName: MapName = {
+  ja: '東方地霊殿',
+  'ja-abbr': '地霊殿',
+  'en-abbr': 'SA',
+};
+const mapCharacters: MapCharacters = {
+  'ja-short': {
+    player: {reimu: '霊夢', marisa: '魔理沙'},
+    support: {
+      yukari: '紫',
+      suika: '萃香',
+      aya: '文',
+      alice: 'アリス',
+      patchouli: 'パチュリー',
+      nitori: 'にとり',
+    },
   },
-  map: {
-    name: {[key in TI18nName]: string};
-    character: {
-      [key in TI18nCharacter]: {
-        [key in TPlayer | TSupport]: string;
-      };
-    };
+  'en-short': {
+    player: {reimu: 'Reimu', marisa: 'Marisa'},
+    support: {
+      yukari: 'Yukari',
+      suika: 'Suika',
+      aya: 'Aya',
+      alice: 'Arice',
+      patchouli: 'Patchouli',
+      nitori: 'Nitori',
+    },
   },
-): string => {
-  return [
-    map.name[i18n.name],
-    [
-      map.character[i18n.character][player],
-      map.character[i18n.character][support],
-    ].join('+'),
-  ].join(' ');
+};
+export const mapDifficulties: MapDifficulties = {
+  ja: {
+    easy: 'イージー',
+    normal: 'ノーマル',
+    hard: 'ハード',
+    lunatic: 'ルナティック',
+    extra: 'エクストラ',
+  },
+  en: {
+    easy: 'EASY',
+    normal: 'NORMAL',
+    hard: 'HARD',
+    lunatic: 'LUNATIC',
+    extra: 'EXTRA',
+  },
 };
 
-export const getMessageText = <
-  TI18nDifficulty extends string,
-  TDifficulty extends string
->(
-  {
-    i18n,
-    difficulty,
-  }: {
-    i18n: {difficulty: TI18nDifficulty};
-    difficulty: TDifficulty;
-  },
-  map: {[key in TI18nDifficulty]: {[key in TDifficulty]: string}},
-): string => {
-  return map[i18n.difficulty][difficulty];
+export const mapColor: MapColors = {
+  easy: '#86d88a',
+  normal: '#a3a9ff',
+  hard: '#e5adad',
+  lunatic: '#d988e3',
+  extra: '#d2b872',
 };
 
-export const getColor = <TDifficulty extends string>(
-  {difficulty}: {difficulty: TDifficulty},
-  map: {[key in TDifficulty]: string},
-): string => {
-  return map[difficulty];
-};
+export const translateName: TranslateName = (map, locales) => map[locales.name];
 
-export const generator = (option: Option): Format => {
+export const translateDifficulty: TranslateDifficulty = (
+  map,
+  locales,
+  difficulty,
+) => map[locales.difficulty][difficulty];
+
+export const translateCharacters: TranslateCharacters = (
+  map,
+  locales,
+  character,
+) =>
+  [
+    map[locales.characters].player[character.player],
+    map[locales.characters].support[character.support],
+  ].join('+');
+
+export const getLabelText: GetLabelText = ({characters, name}) =>
+  [name, characters].join(' ');
+
+export const getMessageText: GetMessageText = ({difficulty}) => difficulty;
+
+export const getColor: GetColor = ({difficulty}, map): string =>
+  map[difficulty];
+
+export const generator: Generator = (option) => {
   return {
-    style: option.style,
-    label: getLabelText(option, mapLabelText),
-    message: getMessageText(option, mapMessageText),
+    style: option.badge.style,
+    label: getLabelText({
+      name: translateName(mapName, option.locale),
+      characters: translateCharacters(
+        mapCharacters,
+        option.locale,
+        option.characters,
+      ),
+    }),
+    message: getMessageText({
+      difficulty: translateDifficulty(
+        mapDifficulties,
+        option.locale,
+        option.difficulty,
+      ),
+    }),
     color: getColor(option, mapColor),
   };
 };
