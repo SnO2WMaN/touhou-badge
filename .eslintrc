@@ -1,6 +1,10 @@
 {
   "root": true,
-  "extends": ["plugin:@shopify/typescript", "plugin:@shopify/prettier"],
+  "extends": [
+    "plugin:@shopify/typescript",
+    "plugin:@shopify/jest",
+    "plugin:@shopify/prettier"
+  ],
   "rules": {
     "import/order": [0],
     "@typescript-eslint/consistent-type-definitions": [2, "type"]

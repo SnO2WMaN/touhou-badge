@@ -1,5 +1,8 @@
 # dependencies
 package-lock.json
 
+# Test
+coverage/
+
 # Vercel
 .vercel/
