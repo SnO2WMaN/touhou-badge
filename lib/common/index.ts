@@ -1,4 +1,10 @@
-export {colors, Difficulty, isDifficulty, selectColor} from './difficulty';
+export {
+  colorsDifficulty,
+  Difficulty,
+  i18nDifficulty,
+  isDifficulty,
+  selectColor,
+} from './difficulty';
 export {
   ColorSelector,
   factoryGetBadgeProps,

@@ -1,9 +1,10 @@
 import {VercelRequestQuery} from '@vercel/node';
 import {
-  colors,
+  colorsDifficulty,
   CommonProps,
   Difficulty,
   factoryGetBadgeProps,
+  i18nDifficulty,
   isDifficulty,
   LabelGenerator,
   MessageGenerator,
@@ -71,12 +72,7 @@ const generateLabel: LabelGenerator<
 
 const generateMessage: MessageGenerator<
   Options,
-  {
-    difficulty: Record<
-      CommonProps['message'],
-      Record<Options['difficulty'], string>
-    >;
-  }
+  {difficulty: typeof i18nDifficulty}
 > = ({difficulty}, {message}, i18n): string =>
   i18n.difficulty[message][difficulty];
 
@@ -85,7 +81,10 @@ export const getBadgeProps = factoryGetBadgeProps(
   generateMessage,
   selectColor,
   {
-    game: {'ja-abbr': '地霊殿', 'en-abbr': 'SA'},
+    game: {
+      'ja-abbr': '地霊殿',
+      'en-abbr': 'SA',
+    },
     character: {
       'ja-abbr': {
         player: {reimu: '霊夢', marisa: '魔理沙'},
@@ -110,22 +109,7 @@ export const getBadgeProps = factoryGetBadgeProps(
         },
       },
     },
-    difficulty: {
-      ja: {
-        easy: 'イージー',
-        normal: 'ノーマル',
-        hard: 'ハード',
-        lunatic: 'ルナティック',
-        extra: 'エクストラ',
-      },
-      en: {
-        easy: 'EASY',
-        normal: 'NORMAL',
-        hard: 'HARD',
-        lunatic: 'LUNATIC',
-        extra: 'EXTRA',
-      },
-    },
+    difficulty: i18nDifficulty,
   },
-  colors,
+  colorsDifficulty,
 );
