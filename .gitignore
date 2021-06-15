@@ -16,6 +16,9 @@ coverage/
 !.vscode/extensions.json
 .vercel
 
+# Next.js
+.next/
+
 # Vercel
 .vercel/
 
