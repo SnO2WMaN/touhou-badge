@@ -6,15 +6,13 @@ module.exports = {
   typescript: {
     ignoreBuildErrors: true,
   },
+  rewrites() {
+    return [{source: '/badges/:path*', destination: '/api/:path*'}];
+  },
   env: {
     BADGE_BASE_URL: new URL(
       '/badges/',
-      process.env.NODE_ENV === 'development'
-        ? process.env.BASE_URL
-        : `https://${process.env.VERCEL_URL}`,
+      process.env.BASE_URL || `https://${process.env.VERCEL_URL}`,
     ).toString(),
-  },
-  rewrites() {
-    return [{source: '/badges/:path*', destination: '/api/:path*'}];
   },
 };
