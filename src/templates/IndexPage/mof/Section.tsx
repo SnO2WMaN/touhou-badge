@@ -1,6 +1,6 @@
 import clsx from 'clsx';
 import React, {useMemo, useState} from 'react';
-import {Badge} from './Badge';
+import {BadgeBlock} from './Badge';
 import {MoFBadgeContext} from './context';
 import {
   DifficultySelection,
@@ -26,22 +26,32 @@ export type LookProps = {
 };
 export const Look: React.VFC<LookProps> = ({className, id, ...props}) => {
   return (
-    <section id={id.section} className={clsx(className)}>
+    <section
+      id={id.section}
+      className={clsx(
+        className,
+        ['px-6', 'py-8'],
+        ['bg-white'],
+        ['shadow-md'],
+        ['rounded-sm'],
+      )}
+    >
       <h2 className={clsx('text-2xl', 'font-bold')}>東方風神録</h2>
-      <div className={clsx('mt-2', 'grid', 'grid-cols-3')}>
+      <div
+        className={clsx(
+          'mt-4',
+          ['grid', 'grid-cols-3'],
+          ['gap-x-4', 'gap-y-4'],
+        )}
+      >
         <DifficultySelection id={id.difficulty} />
         <PlayerSelection id={id.player} />
         <TypeSelection id={id.type} />
-      </div>
-      <div className={clsx('mt-2', 'grid', 'grid-cols-3')}>
         <StyleSelection id={id.style} />
         <LabelSelection id={id.label} />
         <MessageSelection id={id.message} />
       </div>
-      <div className={clsx('mt-4', 'flex', 'flex-col', 'items-center')}>
-        <Badge />
-        <div className={clsx('w-full')} />
-      </div>
+      <BadgeBlock className={clsx('mt-8')} />
     </section>
   );
 };

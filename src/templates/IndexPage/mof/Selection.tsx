@@ -23,8 +23,19 @@ export const Selection: React.VFC<{
 
   return (
     <label className={clsx(className, 'flex', 'flex-col')} htmlFor={id}>
-      <span>{t(i18n.label)}</span>
-      <select id={id} value={value} onChange={handleChange}>
+      <span className={clsx('text-sm')}>{t(i18n.label)}</span>
+      <select
+        className={clsx(
+          ['mt-1'],
+          ['px-2'],
+          ['py-2'],
+          ['border', 'border-blue-200'],
+          ['rounded-sm'],
+        )}
+        id={id}
+        value={value}
+        onChange={handleChange}
+      >
         {Object.entries(choices).map(([value, label]) => (
           <option key={value} value={value}>
             {t(label)}

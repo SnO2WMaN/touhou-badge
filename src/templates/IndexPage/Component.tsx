@@ -12,10 +12,16 @@ export const Look: React.VFC<LookProps> = ({
   ...props
 }) => {
   return (
-    <main className={clsx(className, 'container', 'mx-auto')}>
-      <div className={clsx('grid', 'grid-cols-3')}>
-        <SectionMoF className={clsx('')} />
-      </div>
+    <main
+      className={clsx(
+        className,
+        'w-full',
+        'grid',
+        ['gap-x-4', 'gap-y-4'],
+        ['grid-cols-1', 'lg:grid-cols-2', 'xl:grid-cols-3'],
+      )}
+    >
+      <SectionMoF className={clsx()} />
     </main>
   );
 };
