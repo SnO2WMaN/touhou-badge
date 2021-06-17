@@ -1,0 +1,24 @@
+{
+  "title": "東方風神録",
+  "label": {
+    "difficulty": "難易度",
+    "player": "使用キャラクター",
+    "type": "装備"
+  },
+  "difficulty": {
+    "easy": "$t(common:difficulty.easy)",
+    "normal": "$t(common:difficulty.normal)",
+    "hard": "$t(common:difficulty.hard)",
+    "lunatic": "$t(common:difficulty.lunatic)",
+    "extra": "$t(common:difficulty.extra)"
+  },
+  "player": {
+    "reimu": "$t(common:character.reimu)",
+    "marisa": "$t(common:character.marisa)"
+  },
+  "type": {
+    "a": "A",
+    "b": "B",
+    "c": "C"
+  }
+}
