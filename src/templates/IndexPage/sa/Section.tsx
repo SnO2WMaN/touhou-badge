@@ -1,35 +1,36 @@
 import clsx from 'clsx';
 import {useTranslation} from 'next-i18next';
 import React, {useMemo, useState} from 'react';
+import {badgesBaseUrl} from '~/lib/env';
 import {BadgeBlock} from './Badge';
-import {SABadgeContext} from './context';
 import {
-  DifficultySelection,
-  LabelSelection,
-  MessageSelection,
-  PlayerSelection,
-  StyleSelection,
-  SupportSelection,
-} from './Selection';
+  difficulties,
+  labels,
+  messages,
+  players,
+  styles,
+  supportsMarisa,
+  supportsReimu,
+} from './context';
+import {Selection} from './Selection';
 
 export type LookProps = {
   className?: string;
-  id: Record<
-    | 'section'
-    | 'difficulty'
-    | 'player'
-    | 'support'
-    | 'style'
-    | 'label'
-    | 'message',
-    string
-  >;
+  id: string;
+  badgeUrl: string;
+  selections: Record<string, React.VFC<{className?: string}>>;
 };
-export const Look: React.VFC<LookProps> = ({className, id, ...props}) => {
+export const Look: React.VFC<LookProps> = ({
+  className,
+  id,
+  selections,
+  badgeUrl,
+  ...props
+}) => {
   const {t} = useTranslation();
   return (
     <section
-      id={id.section}
+      id={id}
       className={clsx(
         className,
         ['px-6', 'py-8'],
@@ -46,65 +47,185 @@ export const Look: React.VFC<LookProps> = ({className, id, ...props}) => {
           ['gap-x-4', 'gap-y-4'],
         )}
       >
-        <DifficultySelection id={id.difficulty} />
-        <PlayerSelection id={id.player} />
-        <SupportSelection id={id.support} />
-        <StyleSelection id={id.style} />
-        <LabelSelection id={id.label} />
-        <MessageSelection id={id.message} />
+        {Object.entries(selections).map(([key, Selection]) => (
+          <Selection key={key} />
+        ))}
       </div>
-      <BadgeBlock className={clsx('mt-8')} />
+      <BadgeBlock className={clsx('mt-8')} badgeUrl={badgeUrl} />
     </section>
   );
 };
 
 export type ContainerProps = {className?: string};
 export const Container: React.VFC<ContainerProps> = ({...props}) => {
-  const [difficulty, setDifficulty] = useState<
-    SABadgeContext['difficulty']['value']
-  >('normal');
-  const [player, setPlayer] = useState<SABadgeContext['player']['value']>(
-    'reimu',
+  const [difficulty, setDifficulty] = useState<keyof typeof difficulties>(
+    'normal',
   );
-  const [type, setType] = useState<SABadgeContext['support']['value']>(
+  const [player, setPlayer] = useState<keyof typeof players>('reimu');
+  const [supportReimu, setSupportReimu] = useState<keyof typeof supportsReimu>(
     'yukari',
   );
-  const [style, setStyle] = useState<SABadgeContext['style']['value']>(
-    'flat-square',
-  );
-  const [label, setLabel] = useState<SABadgeContext['label']['value']>(
-    'ja-abbr',
-  );
-  const [message, setMessage] = useState<SABadgeContext['message']['value']>(
-    'en',
-  );
+  const [supportMarisa, setSupportMarisa] = useState<
+    keyof typeof supportsMarisa
+  >('alice');
+  const [style, setStyle] = useState<keyof typeof styles>('flat-square');
+  const [label, setLabel] = useState<keyof typeof labels>('ja-abbr');
+  const [message, setMessage] = useState<keyof typeof messages>('en');
 
-  const value = useMemo<SABadgeContext>(
-    () => ({
-      difficulty: {value: difficulty, change: setDifficulty},
-      player: {value: player, change: setPlayer},
-      support: {value: type, change: setType},
-      style: {value: style, change: setStyle},
-      label: {value: label, change: setLabel},
-      message: {value: message, change: setMessage},
-    }),
-    [difficulty, label, message, player, style, type],
-  );
+  const badgeUrl = useMemo(() => {
+    const url = new URL(
+      player === 'reimu'
+        ? `${difficulty}/${player}/${supportReimu}/`
+        : `${difficulty}/${player}/${supportMarisa}/`,
+      badgesBaseUrl.sa,
+    );
+    url.searchParams.set('style', style);
+    url.searchParams.set('label', label);
+    url.searchParams.set('message', message);
+    return url.toString();
+  }, [difficulty, label, message, player, style, supportMarisa, supportReimu]);
 
-  return (
-    <SABadgeContext.Provider value={value}>
-      <Look
+  const selections = useMemo<
+    Record<string, React.VFC<{className?: string}>>
+  >(() => {
+    const SelectionDifficulty = ({...props}) => (
+      <Selection
         {...props}
-        id={{
-          section: 'sa',
-          difficulty: 'sa-difficulty',
-          player: 'sa-player',
-          support: 'sa-support',
-          style: 'sa-style',
-          label: 'sa-label',
-          message: 'sa-message',
+        id="sa-difficulty"
+        i18n={{label: 'sa:label.difficulty'}}
+        value={difficulty}
+        choices={difficulties}
+        handleChange={(event) => {
+          const value = event.target.value;
+          if (
+            (Object.keys(difficulties).includes as (
+              value: string,
+            ) => value is keyof typeof difficulties)(value)
+          )
+            setDifficulty(value);
         }}
       />
-    </SABadgeContext.Provider>
+    );
+    const SelectionSupportReimu = ({...props}) => (
+      <Selection
+        {...props}
+        id="sa-support"
+        i18n={{label: 'sa:label.support'}}
+        value={supportReimu}
+        choices={supportsReimu}
+        handleChange={(event) => {
+          const value = event.target.value;
+          if (
+            (Object.keys(supportsReimu).includes as (
+              value: string,
+            ) => value is keyof typeof supportsReimu)(value)
+          )
+            setSupportReimu(value);
+        }}
+      />
+    );
+    const SelectionSupportMarisa = ({...props}) => (
+      <Selection
+        {...props}
+        id="sa-player"
+        i18n={{label: 'sa:label.player'}}
+        value={supportMarisa}
+        choices={supportsMarisa}
+        handleChange={(event) => {
+          const value = event.target.value;
+          if (
+            (Object.keys(supportsMarisa).includes as (
+              value: string,
+            ) => value is keyof typeof supportsMarisa)(value)
+          )
+            setSupportMarisa(value);
+        }}
+      />
+    );
+    const SelectionPlayer = ({...props}) => (
+      <Selection
+        {...props}
+        id="sa-player"
+        i18n={{label: 'sa:label.player'}}
+        value={player}
+        choices={players}
+        handleChange={(event) => {
+          const value = event.target.value;
+          if (
+            (Object.keys(players).includes as (
+              value: string,
+            ) => value is keyof typeof players)(value)
+          )
+            setPlayer(value);
+        }}
+      />
+    );
+    const SelectionStyle = ({...props}) => (
+      <Selection
+        {...props}
+        id="sa-player"
+        i18n={{label: 'common:label.style'}}
+        value={style}
+        choices={styles}
+        handleChange={(event) => {
+          const value = event.target.value;
+          if (
+            (Object.keys(styles).includes as (
+              value: string,
+            ) => value is keyof typeof styles)(value)
+          )
+            setStyle(value);
+        }}
+      />
+    );
+    const SelectionLabel = ({...props}) => (
+      <Selection
+        {...props}
+        id="sa-player"
+        i18n={{label: 'common:label.label'}}
+        value={label}
+        choices={labels}
+        handleChange={(event) => {
+          const value = event.target.value;
+          if (
+            (Object.keys(labels).includes as (
+              value: string,
+            ) => value is keyof typeof labels)(value)
+          )
+            setLabel(value);
+        }}
+      />
+    );
+    const SelectionMessage = ({...props}) => (
+      <Selection
+        {...props}
+        id="sa-messages"
+        i18n={{label: 'common:label.message'}}
+        value={message}
+        choices={messages}
+        handleChange={(event) => {
+          const value = event.target.value;
+          if (
+            (Object.keys(messages).includes as (
+              value: string,
+            ) => value is keyof typeof messages)(value)
+          )
+            setMessage(value);
+        }}
+      />
+    );
+    return {
+      difficulty: SelectionDifficulty,
+      player: SelectionPlayer,
+      support:
+        player === 'reimu' ? SelectionSupportReimu : SelectionSupportMarisa,
+      style: SelectionStyle,
+      label: SelectionLabel,
+      message: SelectionMessage,
+    };
+  }, [difficulty, label, message, player, style, supportMarisa, supportReimu]);
+
+  return (
+    <Look {...props} id="sa" badgeUrl={badgeUrl} selections={selections} />
   );
 };
