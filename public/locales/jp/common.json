@@ -1,0 +1,41 @@
+{
+  "page_title": {
+    "index": "Touhou Badges"
+  },
+  "language": {
+    "japanese": "日本語",
+    "english": "英語"
+  },
+  "label": {
+    "style": "スタイル",
+    "label": "ラベル",
+    "message": "メッセージ"
+  },
+  "difficulty": {
+    "easy": "イージー",
+    "normal": "ノーマル",
+    "hard": "ハード",
+    "lunatic": "ルナティック",
+    "extra": "エクストラ"
+  },
+  "character": {
+    "reimu": "博霊 霊夢",
+    "marisa": "霧雨 魔理沙"
+  },
+  "badge": {
+    "style": {
+      "plastic": "Plastic",
+      "flat": "Flat",
+      "flat-square": "Flat Square",
+      "for-the-badge": "For The Badge"
+    },
+    "label": {
+      "ja": "$t(common:language.japanese)",
+      "en": "$t(common:language.english)"
+    },
+    "message": {
+      "ja": "$t(common:language.japanese)",
+      "en": "$t(common:language.english)"
+    }
+  }
+}

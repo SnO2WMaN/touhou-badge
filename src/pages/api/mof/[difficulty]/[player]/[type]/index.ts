@@ -1,10 +1,6 @@
 import {VercelApiHandler} from '@vercel/node';
 import {makeBadge} from 'badge-maker';
-import {
-  extractCommonProps,
-  extractOptions,
-  getBadgeProps,
-} from '../../../../../lib/sa';
+import {extractCommonProps, extractOptions, getBadgeProps} from '~/badges/mof';
 
 const handler: VercelApiHandler = (req, res) => {
   try {

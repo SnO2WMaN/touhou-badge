@@ -6,7 +6,8 @@ package-lock.json
 coverage/
 
 # env
-.env*
+.env.local
+!.env.local.template
 
 # OS
 .DS_Store
@@ -15,6 +16,9 @@ coverage/
 .vscode/*
 !.vscode/extensions.json
 .vercel
+
+# Next.js
+.next/
 
 # Vercel
 .vercel/
