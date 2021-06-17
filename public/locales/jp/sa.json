@@ -1,0 +1,27 @@
+{
+  "title": "東方地霊殿",
+  "label": {
+    "difficulty": "難易度",
+    "player": "使用キャラクター",
+    "support": "支援キャラクター"
+  },
+  "difficulty": {
+    "easy": "$t(common:difficulty.easy)",
+    "normal": "$t(common:difficulty.normal)",
+    "hard": "$t(common:difficulty.hard)",
+    "lunatic": "$t(common:difficulty.lunatic)",
+    "extra": "$t(common:difficulty.extra)"
+  },
+  "player": {
+    "reimu": "$t(common:character.reimu)",
+    "marisa": "$t(common:character.marisa)"
+  },
+  "support": {
+    "yukari": "$t(common:character.yukari)",
+    "suika": "$t(common:character.suika)",
+    "aya": "$t(common:character.aya)",
+    "alice": "$t(common:character.alice)",
+    "patchouli": "$t(common:character.patchouli)",
+    "nitori": "$t(common:character.nitori)"
+  }
+}
