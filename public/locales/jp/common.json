@@ -20,7 +20,13 @@
   },
   "character": {
     "reimu": "博霊 霊夢",
-    "marisa": "霧雨 魔理沙"
+    "marisa": "霧雨 魔理沙",
+    "yukari": "八雲 紫",
+    "suika": "伊吹 萃香",
+    "aya": "射命丸 文",
+    "alice": "アリス・マーガトロイド",
+    "patchouli": "パチュリー・ノーレッジ",
+    "nitori": "河城にとり"
   },
   "badge": {
     "style": {

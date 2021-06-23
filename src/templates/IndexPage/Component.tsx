@@ -1,6 +1,7 @@
 import clsx from 'clsx';
 import React from 'react';
 import {SectionMoF} from './mof';
+import {SectionSA} from './sa';
 
 export type LookProps = {
   className?: string;
@@ -22,6 +23,7 @@ export const Look: React.VFC<LookProps> = ({
       )}
     >
       <SectionMoF className={clsx()} />
+      <SectionSA className={clsx()} />
     </main>
   );
 };
